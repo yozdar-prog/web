@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore the Cosmos: Basic Astronomy</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #e6e6fa;
+            background: linear-gradient(180deg, #0a0a23 0%, #1c2526 100%);
+            overflow-x: hidden;
+            position: relative;
+        }
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: twinkle 2s infinite alternate;
+        }
+        @keyframes twinkle {
+            from { opacity: 0.7; }
+            to { opacity: 0.2; }
+        }
+        header {
+            background: rgba(10, 10, 35, 0.8);
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 3px solid #87ceeb;
+            position: relative;
+            overflow: hidden;
+        }
+        header h1 {
+            font-size: 3em;
+            text-shadow: 0 0 10px #87ceeb;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #87ceeb; }
+            to { text-shadow: 0 0 20px #b0e0e6; }
+        }
+        nav {
+            background: rgba(10, 10, 35, 0.9);
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        nav a {
+            color: #e6e6fa;
+            margin: 0 20px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #ffd700;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+        section {
+            background: rgba(28, 37, 38, 0.85);
+            padding: 30px;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(135, 206, 235, 0.3);
+        }
+        h2 {
+            color: #ffd700;
+            font-size: 2em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        p {
+            line-height: 1.8;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        img {
+            width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        figcaption {
+            text-align: center;
+            font-size: 0.9em;
+            color: #b0c4de;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+        .accordion {
+            background: rgba(10, 10, 35, 0.7);
+            cursor: pointer;
+            padding: 15px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 1.1em;
+            transition: 0.4s;
+            color: #ffd700;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .accordion:hover, .accordion.active {
+            background: rgba(10, 10, 35, 0.9);
+        }
+        .panel {
+            padding: 0 18px;
+            background: rgba(28, 37, 38, 0.7);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            border-radius: 5px;
+        }
+        .interactive {
+            text-align: center;
+            margin: 30px 0;
+        }
+        button {
+            padding: 15px 30px;
+            background: #ffd700;
+            color: #0a0a23;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+        button:hover {
+            background: #ffeb3b;
+            transform: scale(1.1);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 20;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: #1c2526;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #ffd700;
+        }
+        footer {
+            background: rgba(10, 10, 35, 0.8);
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        footer p {
+            font-size: 1em;
+        }
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            nav a {
+                display: block;
+                margin: 10px 0;
+                font-size: 1em;
+            }
+            section {
+                padding: 20px;
+            }
+            .container {
+                margin: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <header>
+        <h1>Explore the Cosmos: Your In-Depth Guide to Basic Astronomy</h1>
+    </header>
+    <nav>
+        <a href="#intro">What is Astronomy?</a>
+        <a href="#stars">Stars & Constellations</a>
+        <a href="#planets">Our Solar System</a>
+        <a href="#galaxies">Galaxies & Beyond</a>
+    </nav>
+    <div class="container">
+        <section id="intro">
+            <h2>What is Astronomy?</h2>
+            <p>Astronomy is one of the oldest sciences, dedicated to the study of celestial objects and phenomena beyond Earth's atmosphere. It encompasses everything from the Moon and planets in our Solar System to distant galaxies, black holes, and the origins of the universe itself. Unlike astrology, which is a pseudoscience focused on interpreting celestial positions for human affairs, astronomy relies on observation, physics, and mathematics to understand the cosmos.</p>
+            <p>Historically, astronomy dates back to ancient civilizations like the Babylonians, Egyptians, and Greeks, who tracked stars for calendars and navigation. Figures like Galileo Galilei revolutionized it in the 17th century with the telescope, revealing moons around Jupiter and phases of Venus. Today, it branches into fields like astrophysics (studying physical properties of stars), cosmology (the universe's origin and fate), and planetary science (exploring planets and exoplanets).</p>
+            <p>Tools range from backyard telescopes to space-based observatories like the Hubble Space Telescope and the James Webb Space Telescope (JWST), which capture light across the electromagnetic spectrum—infrared, visible, ultraviolet, and more—to peer through cosmic dust and back in time. Astronomy helps answer big questions: How did the universe begin with the Big Bang 13.8 billion years ago? What is dark energy accelerating its expansion?</p>
+            <img src="https://cdn.britannica.com/60/190760-050-61999AEC/space-background-telescope-silhouette-NASA-image-elements.jpg" alt="Telescopes: Seeing Stars | Britannica">
+            <figcaption>Image credit: Britannica</figcaption>
+            <p>Fun fact: The word "astronomy" derives from Greek "astron" (star) and "nomos" (law), emphasizing the laws governing celestial bodies. Amateur astronomers today contribute via citizen science projects like spotting exoplanets or tracking asteroids.</p>
+            <button class="accordion">FAQ: How can I start stargazing?</button>
+            <div class="panel">
+                <p>Begin with the naked eye or binoculars in a dark location. Apps like Stellarium help identify constellations. Invest in a beginner telescope for closer views of planets and the Moon.</p>
+            </div>
+            <button class="accordion">FAQ: What's the difference between astronomy and astrophysics?</button>
+            <div class="panel">
+                <p>Astronomy focuses on observing and cataloging, while astrophysics applies physics to explain how celestial objects work, like stellar fusion or black hole gravity.</p>
+            </div>
+        </section>
+        <section id="stars">
+            <h2>Stars & Constellations</h2>
+            <p>Stars are enormous spheres of hot plasma, primarily hydrogen and helium, sustained by nuclear fusion in their cores, where hydrogen atoms fuse into helium, releasing tremendous energy as light and heat. This process powers stars for billions of years. Stars vary widely: our Sun is a G-type main-sequence star, medium-sized and yellow, with a surface temperature of about 5,500°C (9,932°F).</p>
+            <p>Stars go through life cycles: born in nebulae (clouds of gas and dust), they shine on the main sequence, then expand into red giants or supergiants before ending as white dwarfs, neutron stars, or black holes, depending on mass. Massive stars explode as supernovae, forging heavier elements like iron that seed new stars and planets.</p>
+            <p>Constellations are human-imagined patterns of stars, used for millennia in mythology and navigation. There are 88 official constellations recognized by the International Astronomical Union (IAU). Orion, the Hunter, is iconic with its bright stars: red supergiant Betelgeuse (which may supernova soon), blue-white Rigel, and the three-star Belt (Alnitak, Alnilam, Mintaka). Other notables include Ursa Major (Big Dipper) and Cassiopeia.</p>
+            <img src="https://earthsky.org/upl/2021/09/betelgeuse-rigel-orion-1600-e1632920767546.jpg" alt="Orion the Hunter is back in the evening sky">
+            <figcaption>Image credit: EarthSky</figcaption>
+            <p>Stars are classified by spectral type (O, B, A, F, G, K, M—from hottest blue to coolest red) and luminosity. The Hertzsprung-Russell diagram plots this, showing evolutionary paths. Did you know? The nearest star, Proxima Centauri, is 4.24 light-years away, and there are more stars in the observable universe (about 10^24) than grains of sand on Earth!</p>
+            <button class="accordion">FAQ: How do stars form?</button>
+            <div class="panel">
+                <p>Stars form when gravity collapses dense regions in molecular clouds, heating up to ignite fusion. This can take millions of years, often triggered by nearby supernovae.</p>
+            </div>
+            <button class="accordion">FAQ: Can I see constellations year-round?</button>
+            <div class="panel">
+                <p>No, they vary by season and hemisphere due to Earth's orbit. Orion is visible in winter in the Northern Hemisphere.</p>
+            </div>
+        </section>
+        <section id="planets">
+            <h2>Our Solar System</h2>
+            <p>The Solar System formed about 4.6 billion years ago from a collapsing nebula, with the Sun at its center (99.8% of the mass) and eight planets orbiting in nearly circular paths. Planets are divided into terrestrial (rocky: Mercury, Venus, Earth, Mars) and gas/ice giants (Jupiter, Saturn, Uranus, Neptune). They must clear their orbital path, be spherical from gravity, and orbit a star—not fuse like one.</p>
+            <p>Mercury: Smallest, closest to Sun, extreme temperatures (-173°C to 427°C), no atmosphere. Venus: Hottest (464°C average) due to greenhouse effect, rotates backward. Earth: Unique with liquid water, life, one Moon. Mars: Red from iron oxide, thin atmosphere, evidence of past water, two moons (Phobos, Deimos).</p>
+            <p>Jupiter: Largest, gas giant with Great Red Spot storm, 95+ moons including volcanic Io and icy Europa (potential life). Saturn: Famous rings of ice/rock, 146+ moons like Titan with lakes. Uranus: Tilted sideways, icy composition. Neptune: Windy, deep blue from methane, distant Triton moon.</p>
+            <p>Beyond planets: Asteroid Belt between Mars/Jupiter, Kuiper Belt (Pluto, now dwarf planet), Oort Cloud comets. Moons, asteroids, and meteors add diversity. Exploration via probes like Voyager, Perseverance rover on Mars searching for ancient life.</p>
+            <img src="https://images.stockcake.com/public/c/7/5/c7586ee3-2617-470f-a41f-9a400bd4e304_large/vibrant-solar-system-stockcake.jpg" alt="Free Vibrant Solar System Image | Download at StockCake">
+            <figcaption>Image credit: StockCake</figcaption>
+            <p>Fun fact: A day on Venus (243 Earth days) is longer than its year (225 days)! Jupiter could fit 1,300 Earths inside.</p>
+            <button class="accordion">FAQ: Are there more planets beyond Neptune?</button>
+            <div class="panel">
+                <p>Possibly Planet Nine, inferred from orbital anomalies in Kuiper Belt objects, but not yet observed.</p>
+            </div>
+            <button class="accordion">FAQ: What's an exoplanet?</button>
+            <div class="panel">
+                <p>Planets orbiting other stars; over 5,000 discovered via methods like transit (dimming starlight) or radial velocity.</p>
+            </div>
+        </section>
+        <section id="galaxies">
+            <h2>Galaxies & Beyond</h2>
+            <p>Galaxies are vast gravitational systems containing billions of stars, gas, dust, stellar remnants, and dark matter (invisible mass inferred from gravity). Our Milky Way is a barred spiral galaxy, about 100,000 light-years across, with 100-400 billion stars and a central supermassive black hole (Sagittarius A*, 4 million solar masses, imaged in 2022).</p>
+            <p>Types: Spirals (like Andromeda) have arms with star formation; ellipticals (oval, older stars); irregulars (chaotic, like Magellanic Clouds). Galaxies form from early universe density fluctuations, merging over time—Milky Way and Andromeda will collide in 4-5 billion years, but stars rarely hit due to vast space.</p>
+            <p>Beyond: Galaxy clusters (hundreds grouped, like Virgo Cluster) and superclusters form the cosmic web, with voids in between. The observable universe holds 2 trillion galaxies. Phenomena include quasars (active galactic nuclei powered by accreting black holes) and gravitational lensing (bending light).</p>
+            <img src="https://assets.science.nasa.gov/dynamicimage/assets/science/missions/hubble/galaxies/spiral/Hubble_NGC3596_potw2518a.jpg?w=3903&h=3775&fit=clip&crop=faces%2Cfocalpoint" alt="Hubble Comes Face-to-Face with Spiral's Arms - NASA Science">
+            <figcaption>Image credit: NASA Science</figcaption>
+            <p>Did you know? The farthest galaxy observed (GN-z11) is 13.4 billion light-years away, seen as it was shortly after the Big Bang.</p>
+            <button class="accordion">FAQ: What is dark matter?</button>
+            <div class="panel">
+                <p>Invisible matter making up 27% of the universe, detected via gravitational effects on visible matter and light.</p>
+            </div>
+            <button class="accordion">FAQ: How do we study distant galaxies?</button>
+            <div class="panel">
+                <p>Using telescopes like JWST for infrared views through dust, and spectroscopy to analyze composition and motion.</p>
+            </div>
+        </section>
+        <div class="interactive">
+            <button onclick="openModal()">Blast Off to a Cosmic Fact!</button>
+        </div>
+    </div>
+    <div id="factModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Cosmic Fact</h2>
+            <p id="fact"></p>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Explore the Cosmos. Created for astronomy enthusiasts! Images sourced from public domains.</p>
+    </footer>
+    <script>
+        // Generate twinkling stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.width = `${Math.random() * 4}px`;
+            star.style.height = star.style.width;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.animationDelay = `${Math.random() * 2}s`;
+            starsContainer.appendChild(star);
+        }
+
+        // Accordion functionality
+        const acc = document.getElementsByClassName('accordion');
+        for (let i = 0; i < acc.length; i++) {
+            acc[i].addEventListener('click', function() {
+                this.classList.toggle('active');
+                const panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + 'px';
+                }
+            });
+        }
+
+        // Fun fact modal with more facts
+        const facts = [
+            "The universe is expanding faster than the speed of light in some regions due to dark energy!",
+            "A day on Venus takes 243 Earth days, but its year is only 225 days!",
+            "Neutron stars are so dense that a teaspoon of their material weighs as much as a mountain!",
+            "The Hubble Space Telescope can see galaxies over 13 billion light-years away!",
+            "There’s a diamond planet called 55 Cancri e, twice the size of Earth!",
+            "Black holes don't suck everything in; they have event horizons beyond which escape is impossible.",
+            "The Sun loses about 1 billion kg of mass per second through fusion, but it'll last another 5 billion years.",
+            "Exoplanets like TRAPPIST-1e may have water and be habitable."
+        ];
+        const modal = document.getElementById('factModal');
+        const factElement = document.getElementById('fact');
+        function openModal() {
+            factElement.textContent = facts[Math.floor(Math.random() * facts.length)];
+            modal.style.display = 'flex';
+        }
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
